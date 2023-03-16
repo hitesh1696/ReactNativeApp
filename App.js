@@ -14,7 +14,7 @@ import HomeScreen from './src/screens/Home';
 import GetStartedScreen from './src/screens/GetStarted';
 import UserDetailScreen from './src/screens/UserDetails'
 import UserOtpScreen from './src/screens/UserOtp'
-
+import axios from 'axios';
 const Stack = createStackNavigator();
 
 export default function App() {

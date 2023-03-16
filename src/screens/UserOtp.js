@@ -27,7 +27,8 @@ const FormInput = ({ label, value, onChangeText, placeholder }) => {
 };
 
 
-export default function UserOtp({ navigation }) {
+export default function UserOtp({ navigation, route }) {
+    console.log(route);
     const [name, setName] = useState('');
     // const [email, setEmail] = useState('');
 

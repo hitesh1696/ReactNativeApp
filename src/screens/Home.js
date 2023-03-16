@@ -9,13 +9,15 @@ import PhoneInput from "react-native-phone-number-input";
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 export default function App({ navigation }) {
+	// const [v, setV] = useState("");
 	const [value, setValue] = useState("");
 	const [formattedValue, setFormattedValue] = useState("");
 	const [valid, setValid] = useState(false);
 	const [showMessage, setShowMessage] = useState(false);
 	const phoneInput = (null);
-	const handleSubmit = () => {
-        navigation.navigate('UserDetails');
+    const handleSubmit = () => {
+        console.log(value, formattedValue, valid);
+        navigation.navigate('UserDetails', {formattedValue});
     };
     
     const handlePress = () => {
