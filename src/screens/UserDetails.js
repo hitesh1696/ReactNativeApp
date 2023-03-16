@@ -42,33 +42,14 @@ const RoundedCheckbox = ({ label }) => {
         </View>
       </TouchableOpacity>
     );
-  };
-//   const axios = require("axios");
+};
+  
 export default function UserDetails({ navigation, route }) {
     console.log(route.params.formattedValue);
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const handleNameChange = (text) => setName(text);
     const handleEmailChange = (text) => setEmail(text);
-       
-    //     async function postData() {
-    //         try {
-    //             const response = await axios.post('http://192.168.1.16:8000/api/store_user', {
-    //                 mobile: route.params.formattedValue,
-    //                 name: name,
-    //                 email: email,
-    //                 message: 'Hello, Laravel!'
-    //             }, {
-    //                 headers: {
-    //                 'Content-Type': "application/json",
-    //                 'Accept': "application/json",
-    //                 }  
-    //             }  );
-    //              console.log(response.data);
-    //         } catch (error) {
-    //             console.error(error);
-    //         }
-    // }
     postData = async () => {
         const response = await axios.post('http://192.168.1.16:8000/api/store_user',
             {
@@ -83,7 +64,7 @@ export default function UserDetails({ navigation, route }) {
                 },
             }
         )
-        console.log(response.data.email);
+        console.log(response.data);
       }
     const handleSubmit = () => {
         postData();
