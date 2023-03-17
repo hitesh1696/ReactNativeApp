@@ -29,21 +29,21 @@ const FormInput = ({ label, value, onChangeText, placeholder }) => {
 };
 const RoundedCheckbox = ({ label }) => {
     const [isChecked, setIsChecked] = useState(false);
-  
+
     const handlePress = () => setIsChecked(!isChecked);
-  
+
     return (
-      <TouchableOpacity onPress={handlePress}>
-        <View style={styles.checkboxContainer}>
-          <View style={isChecked ? styles.checkedCircle : styles.uncheckedCircle}>
-            {isChecked && <Ionicons name="checkmark-outline" size={20} color="#fff" />}
-          </View>
-          <Text style={styles.label}>{label}</Text>
-        </View>
-      </TouchableOpacity>
+        <TouchableOpacity onPress={handlePress}>
+            <View style={styles.checkboxContainer}>
+                <View style={isChecked ? styles.checkedCircle : styles.uncheckedCircle}>
+                    {isChecked && <Ionicons name="checkmark-outline" size={20} color="#fff" />}
+                </View>
+                <Text style={styles.label}>{label}</Text>
+            </View>
+        </TouchableOpacity>
     );
 };
-  
+
 export default function UserDetails({ navigation, route }) {
     console.log(route.params.formattedValue);
     const [name, setName] = useState('');
@@ -59,44 +59,44 @@ export default function UserDetails({ navigation, route }) {
                     email: email,
                     message: 'Hello, Laravel!'
                 },
-        headers: {
-            Accept: 'application/json',
+                headers: {
+                    Accept: 'application/json',
                 },
             }
         )
         console.log(response.data);
-      }
+    }
     const handleSubmit = () => {
         postData();
     };
     return (
         <View style={styles.container}>
             <Text>{route.params.formattedValue}</Text>
-                <Text style={styles.headline}>Please enter your Name And Email Id to proceed further</Text>
-                <SafeAreaView style={styles.wrapper}>
-                    <FormInput
-                        label="Name"
-                        placeholder="Enter your name"
-                        value={name}
-                        onChangeText={handleNameChange}
-                    />
-                    <FormInput
-                        label="Email"
-                        placeholder="Enter your email"
-                        value={email}
-                        onChangeText={handleEmailChange}
+            <Text style={styles.headline}>Please enter your Name And Email Id to proceed further</Text>
+            <SafeAreaView style={styles.wrapper}>
+                <FormInput
+                    label="Name"
+                    placeholder="Enter your name"
+                    value={name}
+                    onChangeText={handleNameChange}
                 />
-                
-                 <RoundedCheckbox label="I agree to the terms & conditions" />
-                </SafeAreaView>
+                <FormInput
+                    label="Email"
+                    placeholder="Enter your email"
+                    value={email}
+                    onChangeText={handleEmailChange}
+                />
 
-                <TouchableOpacity
-                    style={styles.buttonContainer}
-                    onPress={postData}
-                >
-                    <Text style={styles.buttonText}>Submit</Text>
-                </TouchableOpacity>
-            </View>
+                <RoundedCheckbox label="I agree to the terms & conditions" />
+            </SafeAreaView>
+
+            <TouchableOpacity
+                style={styles.buttonContainer}
+                onPress={postData}
+            >
+                <Text style={styles.buttonText}>Submit</Text>
+            </TouchableOpacity>
+        </View>
     );
 }
 
@@ -106,11 +106,11 @@ const styles = StyleSheet.create({
         flex: 1
     },
     container: {
-		flex: 1,
-		backgroundColor: '#fff',
-		alignItems: 'center',
-		paddingTop: 80,
-	},
+        flex: 1,
+        backgroundColor: '#fff',
+        alignItems: 'center',
+        paddingTop: 80,
+    },
     formGroup: {
         marginVertical: 10,
         width: 350,
@@ -118,15 +118,15 @@ const styles = StyleSheet.create({
 
     },
     headline: {
-		paddingHorizontal: 70,
-		textAlign: 'center',
-		justifyContent: 'center',
-		alignItems: 'center',
-		fontSize: 16,
-		fontWeight: 'bold',
-		marginBottom: 8,
-		lineHeight: 25
-	},
+        paddingHorizontal: 70,
+        textAlign: 'center',
+        justifyContent: 'center',
+        alignItems: 'center',
+        fontSize: 16,
+        fontWeight: 'bold',
+        marginBottom: 8,
+        lineHeight: 25
+    },
     focusedLabel: {
         color: 'blue',
     },
@@ -163,8 +163,8 @@ const styles = StyleSheet.create({
         marginVertical: 10,
         marginHorizontal: 50
 
-      },
-      checkedCircle: {
+    },
+    checkedCircle: {
         width: 24,
         height: 24,
         borderRadius: 12,
@@ -172,15 +172,15 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         marginRight: 10,
-      },
-      uncheckedCircle: {
+    },
+    uncheckedCircle: {
         width: 24,
         height: 24,
         borderRadius: 12,
         borderWidth: 2,
         borderColor: '#007aff',
         marginRight: 10,
-      },
+    },
 });
 
 
