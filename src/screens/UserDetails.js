@@ -15,6 +15,7 @@ const FormInput = ({ label, value, onChangeText, placeholder }) => {
     const handleBlur = () => setIsFocused(false);
     return (
         <View style={styles.formGroup}>
+             
             <Text style={[styles.label, isFocused && styles.focusedLabel]}>{label}</Text>
             <TextInput
                 style={[styles.input, isFocused && styles.focusedInput]}
@@ -33,10 +34,12 @@ export default function UserDetails({ navigation, route }) {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [isChecked, setIsChecked] = useState(false);
+    const [errors, setErrors] = useState({});
     const handleNameChange = (text) => setName(text);
     const handleEmailChange = (text) => setEmail(text);
     const handleTerms = () => setIsChecked(!isChecked);
     postData = async () => {
+            
         const response = await axios.post('http://192.168.1.16:8000/api/store_user',
             {
                 params: {
@@ -47,9 +50,18 @@ export default function UserDetails({ navigation, route }) {
                     terms_conditions: isChecked,
                 },
             }
-        )
-        console.log(response.data);
-    }
+        ).then((response) => {
+            if (response.data.errors) {
+                setErrors(response.data.errors);
+                console.log(response.data.errors);
+            } else {
+                    
+                // console.log(response.data);
+            }
+             
+        });
+        
+    };
     const handleSubmit = () => {
         postData();
     };
@@ -64,13 +76,18 @@ export default function UserDetails({ navigation, route }) {
                     value={name}
                     onChangeText={handleNameChange}
                 />
+                 {errors['params.name'] && (
+                    <Text style={{ color: 'red', fontWeight: 'bold' }}>{errors['params.name'][0]}</Text>
+                )}
                 <FormInput
                     label="Email"
                     placeholder="Enter your email"
                     value={email}
                     onChangeText={handleEmailChange}
                 />
-
+                {errors['params.email'] && (
+                    <Text style={{ alignItems:'center', color: 'red', fontWeight: 'bold' }}>{errors['params.email'][0]}</Text>
+                )}
                 <TouchableOpacity onPress={handleTerms}>
                     <View style={styles.checkboxContainer}>
                         <View style={isChecked ? styles.checkedCircle : styles.uncheckedCircle}>
@@ -102,11 +119,13 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         paddingTop: 80,
     },
+    wrapper: {
+        alignItems: 'center',
+    },
     formGroup: {
         marginVertical: 10,
         width: 350,
         alignItems: 'center',
-
     },
     headline: {
         paddingHorizontal: 70,
