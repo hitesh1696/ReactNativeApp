@@ -9,15 +9,15 @@ import PhoneInput from "react-native-phone-number-input";
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 export default function App({ navigation }) {
-	// const [v, setV] = useState("");
 	const [value, setValue] = useState("");
+	const [countryCode, setCountryCode] = useState('');
 	const [formattedValue, setFormattedValue] = useState("");
 	const [valid, setValid] = useState(false);
 	const [showMessage, setShowMessage] = useState(false);
-	const phoneInput = (null);
+	const phoneInput = useRef(null);
     const handleSubmit = () => {
-        console.log(value, formattedValue, valid);
-        navigation.navigate('UserDetails', {formattedValue});
+        console.log(value, countryCode, formattedValue, valid);
+        navigation.navigate('UserDetails', {value, countryCode});
     };
     
     const handlePress = () => {
@@ -31,6 +31,7 @@ export default function App({ navigation }) {
 				<SafeAreaView style={styles.wrapper}>
 					{showMessage && (
 						<View style={styles.message}>
+							 <Text>Country Code : {countryCode}</Text>
 							<Text>Value : {value}</Text>
 							<Text>Formatted Value : {formattedValue}</Text>
 							<Text>Valid : {valid ? "true" : "false"}</Text>
@@ -39,13 +40,14 @@ export default function App({ navigation }) {
 					<PhoneInput
 						ref={phoneInput}
 						defaultValue={value}
-						defaultCode="DM"
+						defaultCode="IN"
 						layout="first"
 						onChangeText={(text) => {
 							setValue(text);
 						}}
 						onChangeFormattedText={(text) => {
 							setFormattedValue(text);
+							setCountryCode(phoneInput.current?.getCountryCode() || '');
 						}}
 						withDarkTheme
 						withShadow
@@ -56,6 +58,7 @@ export default function App({ navigation }) {
 						onPress={() => {
 							const checkValid = phoneInput.current?.isValidNumber(value);
 							setShowMessage(true);
+							setCountryCode(phoneInput.current?.getCountryCode() || '');
 							setValid(checkValid ? checkValid : false);
 						}}
 					>

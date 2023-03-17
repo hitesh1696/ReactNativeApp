@@ -27,40 +27,24 @@ const FormInput = ({ label, value, onChangeText, placeholder }) => {
         </View>
     );
 };
-const RoundedCheckbox = ({ label }) => {
-    const [isChecked, setIsChecked] = useState(false);
-
-    const handlePress = () => setIsChecked(!isChecked);
-
-    return (
-        <TouchableOpacity onPress={handlePress}>
-            <View style={styles.checkboxContainer}>
-                <View style={isChecked ? styles.checkedCircle : styles.uncheckedCircle}>
-                    {isChecked && <Ionicons name="checkmark-outline" size={20} color="#fff" />}
-                </View>
-                <Text style={styles.label}>{label}</Text>
-            </View>
-        </TouchableOpacity>
-    );
-};
 
 export default function UserDetails({ navigation, route }) {
-    console.log(route.params.formattedValue);
+    console.log(route.params.value);
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
+    const [isChecked, setIsChecked] = useState(false);
     const handleNameChange = (text) => setName(text);
     const handleEmailChange = (text) => setEmail(text);
+    const handleTerms = () => setIsChecked(!isChecked);
     postData = async () => {
         const response = await axios.post('http://192.168.1.16:8000/api/store_user',
             {
                 params: {
-                    mobile: route.params.formattedValue,
+                    country_code: route.params.countryCode,
+                    mobile: route.params.value,
                     name: name,
                     email: email,
-                    message: 'Hello, Laravel!'
-                },
-                headers: {
-                    Accept: 'application/json',
+                    terms_conditions: isChecked,
                 },
             }
         )
@@ -71,7 +55,7 @@ export default function UserDetails({ navigation, route }) {
     };
     return (
         <View style={styles.container}>
-            <Text>{route.params.formattedValue}</Text>
+            <Text>{ route.params.countryCode } - {route.params.value}</Text>
             <Text style={styles.headline}>Please enter your Name And Email Id to proceed further</Text>
             <SafeAreaView style={styles.wrapper}>
                 <FormInput
@@ -87,7 +71,14 @@ export default function UserDetails({ navigation, route }) {
                     onChangeText={handleEmailChange}
                 />
 
-                <RoundedCheckbox label="I agree to the terms & conditions" />
+                <TouchableOpacity onPress={handleTerms}>
+                    <View style={styles.checkboxContainer}>
+                        <View style={isChecked ? styles.checkedCircle : styles.uncheckedCircle}>
+                            {isChecked && <Ionicons name="checkmark-outline" size={20} color="#fff" />}
+                        </View>
+                        <Text style={styles.label}>I accept Terms & Conditions</Text>
+                    </View>
+                </TouchableOpacity>
             </SafeAreaView>
 
             <TouchableOpacity
