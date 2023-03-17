@@ -128,7 +128,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     headline: {
-        paddingHorizontal: 70,
+        paddingHorizontal: 70,  
         textAlign: 'center',
         justifyContent: 'center',
         alignItems: 'center',

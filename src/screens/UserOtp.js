@@ -6,7 +6,7 @@ import {
     TouchableOpacity,
     StyleSheet, Text, View,
 } from 'react-native';
-
+import OtpInputs from 'react-native-otp-inputs';
 const FormInput = ({ label, value, onChangeText, placeholder }) => {
     const [isFocused, setIsFocused] = useState(false);
     const handleFocus = () => setIsFocused(true);
@@ -21,6 +21,10 @@ const FormInput = ({ label, value, onChangeText, placeholder }) => {
                 onChangeText={onChangeText}
                 onFocus={handleFocus}
                 onBlur={handleBlur}
+            />
+            <OtpInputs
+                handleChange={(code) => console.log(code)}
+                numberOfInputs={6}
             />
         </View>
     );
