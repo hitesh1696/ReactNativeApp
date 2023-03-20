@@ -2,109 +2,82 @@ import 'react-native-gesture-handler';
 import React, { useState, useRef } from 'react';
 import {
     TextInput,
-    SafeAreaView,
     TouchableOpacity,
     StyleSheet, Text, View,
 } from 'react-native';
-import OtpInputs from 'react-native-otp-inputs';
-const FormInput = ({ label, value, onChangeText, placeholder }) => {
-    const [isFocused, setIsFocused] = useState(false);
-    const handleFocus = () => setIsFocused(true);
-    const handleBlur = () => setIsFocused(false);
-    return (
-        <View style={styles.formGroup}>
-            <Text style={[styles.label, isFocused && styles.focusedLabel]}>{label}</Text>
-            <TextInput
-                style={[styles.input, isFocused && styles.focusedInput]}
-                placeholder={placeholder}
-                value={value}
-                onChangeText={onChangeText}
-                onFocus={handleFocus}
-                onBlur={handleBlur}
-            />
-            <OtpInputs
-                handleChange={(code) => console.log(code)}
-                numberOfInputs={6}
-            />
-        </View>
-    );
-};
+
 
 
 export default function UserOtp({ navigation, route }) {
-    console.log(route);
-    const [name, setName] = useState('');
+    console.log(route.params.mobileNumber)
+    const [otp, setOtp] = useState(['', '', '', '', '', '']);
+    const inputs = useRef([]);
 
-    const handleNameChange = (text) => setName(text);
-    const handleEmailChange = (text) => setEmail(text);
+    const handleOtpChange = (index, value) => {
+        const newOtp = [...otp];
+        newOtp[index] = value;
+        setOtp(newOtp);
+
+        if (value && index < 5) {
+            inputs.current[index + 1].focus();
+        }
+    };
+    
     const handleSubmit = () => {
         navigation.navigate('GetStarted');
     };
 
 
     return (
-            <View style={styles.container}>
-                <Text style={styles.label}>Please enter OTP to proceed further</Text>
-                <SafeAreaView style={styles.wrapper}>
-                    <FormInput
-                        label="Otp"
-                        placeholder="Enter your name"
-                        value={name}
-                        onChangeText={handleNameChange}
+        <View style={styles.container}>
+            <Text style={{fontSize:18, justifyContent:'center', alignItems:'center'}}>We have sent you OTP on your given number { route.params.mobileNumber}</Text>
+            <Text style={styles.label}>Please enter OTP to proceed further</Text>
+            <View style={styles.otp}>
+                {otp.map((digit, index) => (
+                    <TextInput
+                        key={index}
+                        style={styles.input}
+                        keyboardType="numeric"
+                        maxLength={1}
+                        value={digit}
+                        onChangeText={(value) => handleOtpChange(index, value)}
+                        ref={(ref) => (inputs.current[index] = ref)}
                     />
-                </SafeAreaView>
-
-                <TouchableOpacity
-                    style={styles.buttonContainer}
-                    onPress={handleSubmit}
-                >
-                    <Text style={styles.buttonText}>Submit</Text>
-                </TouchableOpacity>
+                ))}
             </View>
+            <TouchableOpacity
+                style={styles.buttonContainer}
+                onPress={handleSubmit}
+            >
+                <Text style={styles.buttonText}>Submit</Text>
+            </TouchableOpacity>
+        </View>
     );
 }
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        backgroundColor: '#fff',
-        alignItems: 'center',
-
-        paddingTop: 80,
-    },
-    body: {
-        flex: 1
-    },
-    container: {
-        flex: 1,
         justifyContent: 'center',
-        backgroundColor: '#f0f0f0',
-
-        padding: 20,
-    },
-    formGroup: {
-        marginVertical: 10,
         alignItems: 'center',
-
+        flex: 1,
+    },
+    otp: {
+        flexDirection: 'row',
+    },
+    input: {
+        borderWidth: 1,
+        borderColor: '#ccc',
+        borderRadius: 5,
+        fontSize: 20,
+        padding: 10,
+        margin: 5,
+        textAlign: 'center',
+        width: 50,
+        height: 50,
     },
     label: {
         fontWeight: 'bold',
         marginBottom: 5,
-    },
-    focusedLabel: {
-        color: 'blue',
-    },
-    input: {
-        height: 40,
-        width: '80%',
-        borderColor: 'gray',
-        borderWidth: 1,
-        paddingHorizontal: 10,
-        borderRadius: 5,
-        backgroundColor: '#fff',
-    },
-    focusedInput: {
-        borderColor: 'blue',
     },
     buttonContainer: {
         backgroundColor: 'orange',

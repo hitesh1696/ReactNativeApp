@@ -38,6 +38,7 @@ export default function UserDetails({ navigation, route }) {
     const handleNameChange = (text) => setName(text);
     const handleEmailChange = (text) => setEmail(text);
     const handleTerms = () => setIsChecked(!isChecked);
+    const mobileNumber = route.params.value;
     postUserData = async () => {
         const response = await axios.post('http://192.168.1.16:8000/api/store_user',
             {
@@ -50,12 +51,11 @@ export default function UserDetails({ navigation, route }) {
                 },
             }
         ).then((response) => {
-            console.log(response)
-            // if (response.data.errors) {
-            //     setErrors(response.data.errors);
-            // } else {
-			// 	navigation.navigate('UserOtp');
-            // }
+            if (response.data.errors) {
+                setErrors(response.data.errors);
+            } else {
+				navigation.navigate('UserOtp', {mobileNumber});
+            }
         });
         
     };
