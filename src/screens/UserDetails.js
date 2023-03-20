@@ -38,8 +38,7 @@ export default function UserDetails({ navigation, route }) {
     const handleNameChange = (text) => setName(text);
     const handleEmailChange = (text) => setEmail(text);
     const handleTerms = () => setIsChecked(!isChecked);
-    postData = async () => {
-            
+    postUserData = async () => {
         const response = await axios.post('http://192.168.1.16:8000/api/store_user',
             {
                 params: {
@@ -51,19 +50,17 @@ export default function UserDetails({ navigation, route }) {
                 },
             }
         ).then((response) => {
-            if (response.data.errors) {
-                setErrors(response.data.errors);
-                console.log(response.data.errors);
-            } else {
-                    
-                // console.log(response.data);
-            }
-             
+            console.log(response)
+            // if (response.data.errors) {
+            //     setErrors(response.data.errors);
+            // } else {
+			// 	navigation.navigate('UserOtp');
+            // }
         });
         
     };
     const handleSubmit = () => {
-        postData();
+        postUserData();
     };
     return (
         <View style={styles.container}>
@@ -100,7 +97,7 @@ export default function UserDetails({ navigation, route }) {
 
             <TouchableOpacity
                 style={styles.buttonContainer}
-                onPress={postData}
+                onPress={handleSubmit}
             >
                 <Text style={styles.buttonText}>Submit</Text>
             </TouchableOpacity>

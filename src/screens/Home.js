@@ -27,9 +27,10 @@ export default function App({ navigation }) {
             }
         ).then((response) => {
             if (response.data.errors) {
-                console.log(response.data.errors);
+                // console.log(response.data.errors);
                 setErrors(response.data.errors);
 			} else {
+				// console.log(countryCode);
 				navigation.navigate('UserDetails', {value, countryCode});
             }
              
