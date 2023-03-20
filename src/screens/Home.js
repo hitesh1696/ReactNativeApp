@@ -7,6 +7,7 @@ import {
 } from 'react-native';
 import PhoneInput from "react-native-phone-number-input";
 import Icon from 'react-native-vector-icons/FontAwesome';
+import axios from 'axios';
 
 export default function App({ navigation }) {
 	const [value, setValue] = useState("");
@@ -14,10 +15,29 @@ export default function App({ navigation }) {
 	const [formattedValue, setFormattedValue] = useState("");
 	const [valid, setValid] = useState(false);
 	const [showMessage, setShowMessage] = useState(false);
+	const [errors, setErrors] = useState({});
 	const phoneInput = useRef(null);
-    const handleSubmit = () => {
-        console.log(value, countryCode, formattedValue, valid);
-        navigation.navigate('UserDetails', {value, countryCode});
+	postData = async () => {      
+        const response = await axios.post('http://192.168.1.16:8000/api/check_mobile_number_is_valid',
+            {
+                params: {
+                    country_code: countryCode,
+                    mobile: value,
+				},
+            }
+        ).then((response) => {
+            if (response.data.errors) {
+                console.log(response.data.errors);
+                setErrors(response.data.errors);
+			} else {
+				navigation.navigate('UserDetails', {value, countryCode});
+            }
+             
+        });
+        
+    };
+	const handleSubmit = () => {
+		postData();
     };
     
     const handlePress = () => {
@@ -36,6 +56,9 @@ export default function App({ navigation }) {
 							<Text>Formatted Value : {formattedValue}</Text>
 							<Text>Valid : {valid ? "true" : "false"}</Text>
 						</View>
+					)}
+					{errors['params.mobile'] && (
+						<Text style={{ color: 'red', fontWeight: 'bold' }}>{errors['params.mobile'][0]}</Text>
 					)}
 					<PhoneInput
 						ref={phoneInput}
