@@ -9,7 +9,6 @@ import {
 
 
 export default function UserOtp({ navigation, route }) {
-    console.log(route.params.mobileNumber)
     const [otp, setOtp] = useState(['', '', '', '', '', '']);
     const inputs = useRef([]);
 

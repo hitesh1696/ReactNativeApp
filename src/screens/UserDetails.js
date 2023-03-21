@@ -51,6 +51,7 @@ export default function UserDetails({ navigation, route }) {
                 },
             }
         ).then((response) => {
+            console.log("Hiii",response.data);
             if (response.data.errors) {
                 setErrors(response.data.errors);
             } else {

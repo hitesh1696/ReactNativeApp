@@ -22,15 +22,13 @@ export default function App({ navigation }) {
             {
                 params: {
                     country_code: countryCode,
-                    mobile: value,
+					mobile: value,
 				},
             }
         ).then((response) => {
-			// console.log(response.data.errors);
             if (response.data.errors) {
                 setErrors(response.data.errors);
 			} else {
-				// console.log(response);
 				navigation.navigate('UserDetails', {value, countryCode});
             }
              
