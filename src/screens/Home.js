@@ -26,11 +26,11 @@ export default function App({ navigation }) {
 				},
             }
         ).then((response) => {
+			// console.log(response.data.errors);
             if (response.data.errors) {
-                // console.log(response.data.errors);
                 setErrors(response.data.errors);
 			} else {
-				// console.log(countryCode);
+				// console.log(response);
 				navigation.navigate('UserDetails', {value, countryCode});
             }
              
@@ -57,6 +57,9 @@ export default function App({ navigation }) {
 							<Text>Formatted Value : {formattedValue}</Text>
 							<Text>Valid : {valid ? "true" : "false"}</Text>
 						</View>
+					)}
+					{errors['mobile'] && (
+						<Text style={{ color: 'red', fontWeight: 'bold' }}>{errors['mobile']}</Text>
 					)}
 					{errors['params.mobile'] && (
 						<Text style={{ color: 'red', fontWeight: 'bold' }}>{errors['params.mobile'][0]}</Text>
