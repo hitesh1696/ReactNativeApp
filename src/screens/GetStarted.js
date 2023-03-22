@@ -14,9 +14,6 @@ const images = [
     'https://picsum.photos/600/700',
 ];
 
-// const handleSubmit = () => {
-//     navigation.navigate('Home');
-// };
 
 export default function GetStarted({ navigation }) {
     const [active, setActive] = useState(0);
@@ -60,18 +57,6 @@ export default function GetStarted({ navigation }) {
                         </Text>
                     ))}
                 </View>
-                {/* <Image
-                        source={require('../images/wallpaper.jpg')}
-                        style={styles.image}
-                    />
-                        <Image
-                        source={require('../images/wallpaper.jpg')}
-                        style={styles.image}
-                    />
-                        <Image
-                        source={require('../images/wallpaper.jpg')}
-                        style={styles.image}
-                    /> */}
 
                 <SafeAreaView >
                     <TouchableOpacity
